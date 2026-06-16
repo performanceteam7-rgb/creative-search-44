@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>44교시 생존수업 · 크리에이티브 서칭 대시보드</title>
+<meta name="description" content="스릴러·공포 화제작 광고 크리에이티브 벤치마크 — 44교시 생존수업 재광고 인사이트" />
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+  :root{
+    --bg:#08070a;
+    --line:rgba(255,255,255,.085); --line2:rgba(255,255,255,.05);
+    --txt:#f0eef2; --muted:#9b94a3; --dim:#6a6472;
+    --accent:#ff2e4d; --accent2:#ff6a3d;
+    --ok:#34d39a; --warn:#f5b53f; --crit:#ff4d62; --info:#7aa2ff;
+    --num:'Plus Jakarta Sans','Pretendard',sans-serif;
+    --soft:0 1px 2px rgba(0,0,0,.5),0 16px 40px -16px rgba(0,0,0,.7);
+    --ease:cubic-bezier(.32,.72,0,1);
+    --cardbg:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:'Pretendard','Plus Jakarta Sans',system-ui,sans-serif;
+    font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+  body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(60% 50% at 8% -8%, rgba(255,46,77,.13), transparent 60%),
+      radial-gradient(52% 46% at 104% -4%, rgba(160,107,255,.08), transparent 60%),
+      radial-gradient(70% 60% at 50% 120%, rgba(255,106,61,.06), transparent 55%),
+      var(--bg)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1340px;margin:0 auto;padding:34px 26px 64px}
+  h1,h2,h3{margin:0;font-weight:700;letter-spacing:-.02em}
+  .muted{color:var(--muted)} .dim{color:var(--dim);font-size:12px}
+  b{color:#fff;font-weight:700}
+
+  .panel{position:relative;background:var(--cardbg);border:1px solid var(--line);border-radius:22px;
+    padding:22px 24px;margin-bottom:20px;box-shadow:var(--soft),inset 0 1px 0 rgba(255,255,255,.05);
+    opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .panel.in{opacity:1;transform:none}
+  .sec-title{font-size:16px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .sec-title .num{font-family:var(--num);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;
+    width:24px;height:24px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:11.5px;font-weight:800;box-shadow:0 2px 12px rgba(255,46,77,.45)}
+  .sec-title .tail{font-weight:400;color:var(--dim);font-size:12.5px}
+
+  /* header */
+  .topbar{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:22px}
+  .eyebrow{display:inline-block;font-size:10.5px;text-transform:uppercase;letter-spacing:.24em;
+    color:var(--accent);font-weight:700;margin-bottom:10px}
+  .topbar h1{font-size:30px;letter-spacing:-.03em;line-height:1.1}
+  .topbar h1 .hl{color:var(--accent)}
+  .topbar .sub{color:var(--muted);font-size:13px;margin-top:9px;max-width:680px;line-height:1.5}
+  .updbar{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;align-items:center;color:var(--muted)}
+  .updbar b{color:var(--txt)}
+  .legend{display:flex;gap:9px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--muted);
+    background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .chip b{color:var(--txt);font-weight:700}
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .conf{font-size:10px;font-weight:700}
+  .conf.정확{color:var(--ok)} .conf.추정{color:var(--warn)} .conf.수동{color:var(--crit)} .conf.미확인{color:var(--dim)}
+
+  /* 작품 개요 밴드 */
+  .works{display:grid;grid-template-columns:repeat(auto-fit,minmax(216px,1fr));gap:14px}
+  .wcard{position:relative;background:var(--cardbg);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:var(--soft),inset 0 1px 0 rgba(255,255,255,.06);display:flex;flex-direction:column;
+    transition:transform .5s var(--ease),border-color .5s var(--ease)}
+  .wcard:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.2)}
+  .wcard.owner{border-color:rgba(255,46,77,.55);box-shadow:0 0 0 1px rgba(255,46,77,.25),0 18px 44px -18px rgba(255,46,77,.4)}
+  .wthumb{height:128px;position:relative;overflow:hidden;display:flex;align-items:flex-end;background:#0c0a0f}
+  .wthumb img{width:100%;height:100%;object-fit:cover}
+  .wthumb .noimg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;
+    font-weight:800;font-size:14px;color:#fff;padding:14px;line-height:1.3;word-break:keep-all}
+  .wthumb::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent 55%)}
+  .wtype{position:absolute;top:9px;left:9px;z-index:2;font-size:9.5px;font-weight:800;padding:3px 8px;border-radius:999px;
+    background:rgba(0,0,0,.55);letter-spacing:.04em}
+  .wown{position:absolute;top:9px;right:9px;z-index:2;font-size:9px;font-weight:800;padding:3px 8px;border-radius:999px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+  .wbody{padding:13px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .wname{font-size:14.5px;font-weight:800;line-height:1.25;word-break:keep-all;letter-spacing:-.02em}
+  .wmeta{font-size:11px;color:var(--dim)}
+  .wgen{display:flex;gap:5px;flex-wrap:wrap}
+  .gtag{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:7px;border:1px solid var(--line);color:var(--muted)}
+  .wbuzz{font-size:11px;color:#d2cdd8;background:rgba(255,255,255,.03);border-radius:9px;padding:8px 10px;line-height:1.5;margin-top:auto}
+  .wbuzz .bz{display:flex;justify-content:space-between;gap:8px;padding:1.5px 0}
+  .wbuzz .bz span{color:var(--dim)} .wbuzz .bz b{font-family:var(--num);font-size:12px}
+  .wad{font-size:10px;font-weight:700;padding:5px 9px;border-radius:8px;display:flex;align-items:center;gap:6px;line-height:1.3}
+  .wad.none{background:rgba(255,77,98,.1);color:#ff8a9a;border:1px solid rgba(255,77,98,.25)}
+  .wad.yes{background:rgba(52,211,154,.1);color:#5be0b0;border:1px solid rgba(52,211,154,.22)}
+  .wad.unknown{background:rgba(245,181,63,.1);color:#f5c869;border:1px solid rgba(245,181,63,.22)}
+
+  /* 비교 분석 */
+  .cmp{display:flex;flex-direction:column;gap:10px}
+  .cmp-row{display:grid;grid-template-columns:150px 1fr 1fr;gap:12px;align-items:stretch;
+    background:rgba(255,255,255,.025);border:1px solid var(--line2);border-radius:14px;padding:12px 14px}
+  .cmp-axis{font-size:12.5px;font-weight:800;color:#fff;display:flex;align-items:center;gap:7px;word-break:keep-all}
+  .cmp-gap{width:7px;height:7px;border-radius:50%;flex:none}
+  .gap-critical{background:var(--crit);box-shadow:0 0 8px var(--crit)} .gap-high{background:var(--warn)}
+  .gap-mid{background:var(--info)} .gap-asset{background:var(--ok)}
+  .cmp-side{font-size:12px;line-height:1.5;padding:9px 12px;border-radius:10px;word-break:keep-all}
+  .cmp-ours{background:rgba(255,46,77,.08);border:1px solid rgba(255,46,77,.2);color:#ffd2d9}
+  .cmp-bench{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#cdd2dd}
+  .cmp-side .lab{display:block;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;opacity:.75}
+  .cmp-head{display:grid;grid-template-columns:150px 1fr 1fr;gap:12px;padding:0 14px 4px;font-size:10.5px;
+    font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+  @media(max-width:760px){.cmp-row,.cmp-head{grid-template-columns:1fr}.cmp-head{display:none}}
+
+  /* 인사이트 적용 카드 */
+  .applies{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+  .apply{position:relative;background:linear-gradient(180deg,rgba(255,46,77,.06),rgba(255,255,255,.015));
+    border:1px solid rgba(255,46,77,.22);border-radius:16px;padding:16px 18px;overflow:hidden}
+  .apply::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--accent),var(--accent2))}
+  .apply .an{font-family:var(--num);font-size:12px;font-weight:800;color:var(--accent);}
+  .apply h3{font-size:14px;margin:3px 0 7px;word-break:keep-all;line-height:1.3}
+  .apply p{margin:0;font-size:12.5px;color:#d2cdd8;line-height:1.55;word-break:keep-all}
+
+  /* bars */
+  .bar-row{display:flex;align-items:center;gap:12px;margin:8px 0}
+  .bar-row .name{width:140px;font-size:12px;color:#d2cdd8;flex:none;font-weight:600;word-break:keep-all}
+  .track{flex:1;height:22px;background:rgba(255,255,255,.04);border-radius:8px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.3)}
+  .track span{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .9s var(--ease)}
+  .bar-row .val{width:34px;text-align:right;font-family:var(--num);font-variant-numeric:tabular-nums;font-size:13px;font-weight:700}
+
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:900px){.row2{grid-template-columns:1fr}}
+
+  /* gallery */
+  .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+  select,input[type=search]{background:rgba(255,255,255,.04);color:var(--txt);border:1px solid var(--line);
+    border-radius:10px;padding:9px 13px;font-size:13px;font-family:inherit;transition:border-color .3s var(--ease)}
+  select:hover,input:hover{border-color:rgba(255,255,255,.2)}
+  select:focus,input:focus{outline:none;border-color:var(--accent);background:rgba(255,46,77,.05)}
+  .count-pill{margin-left:auto;color:var(--muted);font-size:12.5px;font-weight:600}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:18px}
+  .card{position:relative;background:var(--cardbg);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    display:flex;flex-direction:column;box-shadow:var(--soft);
+    transition:transform .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease)}
+  .card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.2);box-shadow:0 2px 6px rgba(0,0,0,.4),0 28px 54px -18px rgba(0,0,0,.75)}
+  .thumb{height:188px;position:relative;overflow:hidden;display:flex;align-items:flex-end;background:#0c0a0f}
+  .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+  .card:hover .thumb img{transform:scale(1.06)}
+  .thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.62),transparent 50%);pointer-events:none}
+  .thumb .copybig{position:relative;z-index:1;padding:14px;font-weight:800;font-size:15px;line-height:1.32;
+    text-shadow:0 2px 10px rgba(0,0,0,.7);word-break:keep-all;color:#fff}
+  .thumb .play{position:absolute;top:10px;right:10px;z-index:2;background:rgba(0,0,0,.6);border-radius:8px;font-size:10px;padding:3px 8px;font-weight:700}
+  .thumb .wtag{position:absolute;top:10px;left:10px;z-index:2;font-size:9.5px;font-weight:800;padding:3px 8px;border-radius:999px;color:#fff}
+  .card .body{padding:13px 14px;display:flex;flex-direction:column;gap:9px;flex:1}
+  .card .copy{font-size:12.5px;color:#e2dee6;line-height:1.5;font-weight:600;word-break:keep-all;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .card .vis{font-size:11px;color:var(--muted);line-height:1.45;word-break:keep-all;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .card .hook{font-size:11px;color:#ffc9d1;background:rgba(255,46,77,.08);border:1px solid rgba(255,46,77,.16);
+    border-radius:9px;padding:7px 9px;line-height:1.45;word-break:keep-all}
+  .tags{display:flex;gap:6px;flex-wrap:wrap}
+  .tag{font-size:10px;padding:3px 8px;border-radius:7px;border:1px solid var(--line);color:var(--muted);font-weight:700}
+  .card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;font-size:11px;color:var(--dim);
+    border-top:1px solid var(--line2);padding-top:9px}
+  .card .foot a{color:var(--accent);font-weight:700}
+
+  /* timeline */
+  .tl{display:flex;flex-direction:column;gap:0;position:relative;margin-left:6px}
+  .tl-item{display:flex;gap:14px;padding:10px 0;position:relative}
+  .tl-item::before{content:'';position:absolute;left:5px;top:0;bottom:0;width:2px;background:var(--line)}
+  .tl-item:first-child::before{top:18px} .tl-item:last-child::before{bottom:auto;height:18px}
+  .tl-dot{width:12px;height:12px;border-radius:50%;flex:none;margin-top:5px;z-index:1;border:2px solid var(--bg)}
+  .tl-c{flex:1}
+  .tl-date{font-family:var(--num);font-size:12px;font-weight:700;color:var(--muted)}
+  .tl-label{font-size:13px;font-weight:700;margin-top:1px;word-break:keep-all}
+
+  .footer{color:var(--dim);font-size:11.5px;text-align:center;padding:20px 0 10px;line-height:1.9}
+  svg{display:block}
+  ::-webkit-scrollbar{width:11px;height:11px}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:8px;border:3px solid transparent;background-clip:content-box}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2);background-clip:content-box}
+
+  @media(max-width:640px){
+    .wrap{padding:22px 14px 48px}
+    .topbar h1{font-size:23px}
+    .topbar{flex-direction:column;align-items:flex-start;gap:12px}
+    .panel{padding:18px 15px;border-radius:18px}
+    .works{grid-template-columns:1fr 1fr;gap:10px}
+    .gallery{grid-template-columns:1fr;gap:13px}
+    .bar-row .name{width:104px;font-size:11px}
+    .filters{gap:7px} select,input[type=search]{font-size:12px;padding:7px 9px}
+    .count-pill{margin-left:0;width:100%}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="topbar">
+    <div>
+      <span class="eyebrow">Creative Search · Thriller & Horror Benchmark</span>
+      <h1><span class="hl">44교시 생존수업</span> 크리에이티브 서칭</h1>
+      <div class="sub" id="subtitle"></div>
+    </div>
+    <div class="updbar" id="updbar"></div>
+  </div>
+
+  <div class="panel" style="padding:13px 18px">
+    <div class="legend" id="legend"></div>
+    <div class="dim" id="srcNote" style="margin-top:9px"></div>
+  </div>
+
+  <!-- 0. 작품 개요 밴드 -->
+  <div class="panel">
+    <div class="sec-title">🎬 벤치마크 작품 개요 <span class="tail">— 자사 1 + 스릴러·공포 화제작 5</span></div>
+    <div class="works" id="works"></div>
+  </div>
+
+  <!-- 1. 비교 분석 -->
+  <div class="panel">
+    <div class="sec-title"><span class="num">1</span> 비교 분석 <span class="tail">— &lt;44교시 생존수업&gt; vs 요청 작품</span></div>
+    <div class="cmp-head"><div>비교 축</div><div>44교시 생존수업 (자사)</div><div>벤치마크 화제작</div></div>
+    <div class="cmp" id="cmp"></div>
+    <div class="dim" style="margin-top:12px;display:flex;gap:14px;flex-wrap:wrap">
+      <span><span class="cmp-gap gap-critical" style="display:inline-block;margin-right:5px"></span>치명적 격차</span>
+      <span><span class="cmp-gap gap-high" style="display:inline-block;margin-right:5px"></span>높은 격차</span>
+      <span><span class="cmp-gap gap-mid" style="display:inline-block;margin-right:5px"></span>중간</span>
+      <span><span class="cmp-gap gap-asset" style="display:inline-block;margin-right:5px"></span>공통 강점(자산)</span>
+    </div>
+  </div>
+
+  <!-- 2. 재광고 적용 인사이트 -->
+  <div class="panel">
+    <div class="sec-title"><span class="num">2</span> 재광고 적용 인사이트 <span class="tail">— 44교시 재집행 시 반영할 위닝 전략</span></div>
+    <div class="applies" id="applies"></div>
+  </div>
+
+  <!-- 3. 후킹 패턴 -->
+  <div class="row2">
+    <div class="panel">
+      <div class="sec-title"><span class="num">3</span> 후킹 패턴 분석 <span class="tail">— 벤치마크 크리에이티브 카피·연출</span></div>
+      <div id="hookBars"></div>
+      <div class="dim" style="margin-top:10px">막대 = 해당 후킹을 쓴 크리에이티브 수 (자사 제외 벤치마크 기준).</div>
+    </div>
+    <div class="panel">
+      <div class="sec-title"><span class="num">3</span> 포맷 · 매체 분포</div>
+      <div id="fmtBars" style="margin-bottom:18px"></div>
+      <div id="mediaBars"></div>
+    </div>
+  </div>
+
+  <!-- 4. 크리에이티브 갤러리 -->
+  <div class="panel">
+    <div class="sec-title"><span class="num">4</span> 크리에이티브 갤러리 <span class="tail">— 실제 카피·키비주얼·후킹 (출처 링크)</span></div>
+    <div class="filters" id="filters">
+      <select id="fWork"></select>
+      <select id="fMedia"></select>
+      <select id="fFormat"></select>
+      <select id="fSort"></select>
+      <input type="search" id="fSearch" placeholder="카피·후킹 검색…" />
+      <span class="count-pill" id="galleryCount"></span>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <!-- 5. 타임라인 -->
+  <div class="panel">
+    <div class="sec-title"><span class="num">5</span> 공개·캠페인 타임라인</div>
+    <div class="tl" id="timeline"></div>
+  </div>
+
+  <div class="footer" id="footer"></div>
+</div>
+
+<script src="data.js"></script>
+<script>
+const D = window.DATA;
+const WORKS = D.works;
+const WMAP = Object.fromEntries(WORKS.map(w=>[w.key,w]));
+const OWNER = D.meta.owner;
+const MEDIA_LABEL = {meta:"Meta", youtube:"YouTube", naver:"네이버웹툰", kakao:"카카오페이지", google:"Google·언론"};
+const MEDIA_COLOR = {meta:"#0866ff", youtube:"#ff0033", naver:"#00e070", kakao:"#ffcd00", google:"#9aa3b2"};
+const FMT_LABEL = {image:"이미지", video:"영상"};
+
+// ── HEADER ──
+document.getElementById("subtitle").textContent = D.meta.subtitle;
+document.getElementById("updbar").innerHTML = `
+  <span>수집: <b>${D.meta.lastUpdated}</b></span>
+  <span class="chip" style="border-color:#7a1f2e;color:#ff8a9a"><span class="dot" style="background:var(--accent)"></span> 실데이터 (웹·플랫폼·Meta 교차)</span>`;
+document.getElementById("legend").innerHTML = Object.entries(D.meta.sources).map(([k,s])=>{
+  const cc = s.confidence==="정확"?"var(--ok)":s.confidence==="추정"?"var(--warn)":"var(--crit)";
+  return `<span class="chip"><span class="dot" style="background:${MEDIA_COLOR[k]||'#888'}"></span>${s.label}
+    · <span style="color:${cc}">${s.confidence}</span> <span class="dim">(${s.note})</span></span>`;
+}).join("");
+document.getElementById("srcNote").textContent = "ℹ " + D.meta.note;
+
+// ── 0. 작품 개요 ──
+(function(){
+  const order = [OWNER, ...WORKS.filter(w=>w.key!==OWNER).map(w=>w.key)];
+  document.getElementById("works").innerHTML = order.map(k=>{
+    const w = WMAP[k];
+    const thumb = w.image
+      ? `<img src="${w.image}" loading="lazy" alt="${w.name}" onerror="this.parentElement.innerHTML='<div class=\\'noimg\\' style=\\'background:linear-gradient(135deg,${w.color},#100d14)\\'>${w.name}</div>'"/>`
+      : `<div class="noimg" style="background:linear-gradient(135deg,${w.color},#100d14)">${w.name}</div>`;
+    const adClass = w.meta_ad_status==="none"?"none":w.meta_ad_status==="yes"?"yes":"unknown";
+    const adIcon = w.meta_ad_status==="none"?"⚠":w.meta_ad_status==="yes"?"✓":"?";
+    const buzz = w.buzz.slice(0,3).map(b=>`<div class="bz"><span>${b.metric}</span><b>${b.value}</b></div>`).join("");
+    return `<div class="wcard ${w.key===OWNER?'owner':''}">
+      <div class="wthumb">${thumb}
+        <span class="wtag" style="background:${w.color}cc">${w.type}</span>
+        ${w.key===OWNER?`<span class="wown">우리 작품</span>`:''}
+      </div>
+      <div class="wbody">
+        <div class="wname">${w.name}</div>
+        <div class="wmeta">${w.platform} · ${w.release}</div>
+        <div class="wgen">${w.genre.map(g=>`<span class="gtag">${g}</span>`).join("")}</div>
+        <div class="wbuzz">${buzz}</div>
+        <div class="wad ${adClass}">${adIcon} ${w.meta_ad_note}</div>
+      </div>
+    </div>`;
+  }).join("");
+})();
+
+// ── 1. 비교 분석 ──
+document.getElementById("cmp").innerHTML = D.comparison.map(c=>`
+  <div class="cmp-row">
+    <div class="cmp-axis"><span class="cmp-gap gap-${c.gap}"></span>${c.axis}</div>
+    <div class="cmp-side cmp-ours"><span class="lab">44교시</span>${c.surv44}</div>
+    <div class="cmp-side cmp-bench"><span class="lab">벤치마크</span>${c.bench}</div>
+  </div>`).join("");
+
+// ── 2. 적용 인사이트 ──
+document.getElementById("applies").innerHTML = D.applyInsights.map((a,i)=>`
+  <div class="apply">
+    <div class="an">INSIGHT ${String(i+1).padStart(2,'0')}</div>
+    <h3>${a.t}</h3><p>${a.d}</p>
+  </div>`).join("");
+
+// ── 3. 후킹 패턴 (벤치마크 크리에이티브 기준) ──
+(function(){
+  const bench = D.creatives.filter(c=>c.work!==OWNER);
+  const counts = Object.entries(D.hookDict).map(([hook,kws])=>{
+    const n = bench.filter(c=>{
+      const text = (c.copy||"")+" "+(c.visual||"")+" "+(c.hook||"");
+      return kws.some(w=>text.includes(w));
+    }).length;
+    return {hook, n};
+  }).filter(r=>r.n>0).sort((a,b)=>b.n-a.n);
+  const max = Math.max(...counts.map(r=>r.n),1);
+  document.getElementById("hookBars").innerHTML = counts.map(r=>`
+    <div class="bar-row"><span class="name">${r.hook}</span>
+      <div class="track"><span style="width:${r.n/max*100}%"></span></div>
+      <span class="val">${r.n}</span></div>`).join("");
+})();
+
+// ── 3b. 포맷·매체 분포 (전체 크리에이티브) ──
+(function(){
+  const all = D.creatives;
+  function distro(field, labelMap, colorMap){
+    const keys = [...new Set(all.map(c=>c[field]))];
+    const counts = keys.map(k=>({k, n:all.filter(c=>c[field]===k).length})).sort((a,b)=>b.n-a.n);
+    const max = Math.max(...counts.map(c=>c.n),1);
+    return counts.map(c=>`<div class="bar-row"><span class="name">${(labelMap[c.k]||c.k)}</span>
+      <div class="track"><span style="width:${c.n/max*100}%;${colorMap&&colorMap[c.k]?`background:${colorMap[c.k]}`:''}"></span></div>
+      <span class="val">${c.n}</span></div>`).join("");
+  }
+  document.getElementById("fmtBars").innerHTML =
+    `<div class="dim" style="font-weight:700;color:#cdd2dd;margin-bottom:6px">포맷</div>`+distro("format", FMT_LABEL);
+  document.getElementById("mediaBars").innerHTML =
+    `<div class="dim" style="font-weight:700;color:#cdd2dd;margin-bottom:6px">매체</div>`+distro("media", MEDIA_LABEL, MEDIA_COLOR);
+})();
+
+// ── 4. 갤러리 ──
+(function(){
+  const fWork=document.getElementById("fWork"), fMedia=document.getElementById("fMedia"),
+        fFormat=document.getElementById("fFormat"), fSort=document.getElementById("fSort"), fSearch=document.getElementById("fSearch");
+  fWork.innerHTML = `<option value="">전체 작품</option>`+WORKS.map(w=>`<option value="${w.key}">${w.name}${w.key===OWNER?' (우리)':''}</option>`).join("");
+  fMedia.innerHTML = `<option value="">전체 매체</option>`+[...new Set(D.creatives.map(c=>c.media))].map(m=>`<option value="${m}">${MEDIA_LABEL[m]||m}</option>`).join("");
+  fFormat.innerHTML = `<option value="">전체 포맷</option>`+[...new Set(D.creatives.map(c=>c.format))].map(f=>`<option value="${f}">${FMT_LABEL[f]||f}</option>`).join("");
+  fSort.innerHTML = `<option value="own">자사 먼저</option><option value="work">작품순</option><option value="media">매체순</option>`;
+
+  function render(){
+    const w=fWork.value, m=fMedia.value, f=fFormat.value, q=fSearch.value.trim();
+    let list = D.creatives.filter(c=>(!w||c.work===w)&&(!m||c.media===m)&&(!f||c.format===f)&&
+      (!q||(c.copy||"").includes(q)||(c.hook||"").includes(q)||(c.visual||"").includes(q)));
+    const s=fSort.value;
+    list.sort((a,b)=> s==="media"? a.media.localeCompare(b.media)
+      : s==="work"? a.work.localeCompare(b.work)
+      : (a.work===OWNER?-1:0)-(b.work===OWNER?-1:0) || a.work.localeCompare(b.work));
+    document.getElementById("galleryCount").textContent = `${list.length}건 / 전체 ${D.creatives.length}건`;
+    document.getElementById("gallery").innerHTML = list.map(c=>{
+      const w = WMAP[c.work];
+      const head = c.image
+        ? `<img src="${c.image}" loading="lazy" alt="" onerror="this.parentElement.classList.add('noimgbg');this.outerHTML='<div class=\\'copybig\\'>${(c.copy||'').replace(/'/g,'’').slice(0,46)}</div>'"/>`
+        : `<div class="copybig">${(c.copy||'').slice(0,52)}</div>`;
+      return `<div class="card">
+        <div class="thumb" style="${c.image?'':`background:linear-gradient(150deg,${w.color}40,#0c0a0f)`}">
+          ${head}
+          <span class="wtag" style="background:${w.color}cc">${w.name.length>10?w.name.slice(0,9)+'…':w.name}</span>
+          ${c.format==="video"?`<span class="play">▶ 영상</span>`:''}
+        </div>
+        <div class="body">
+          <div class="copy">“${c.copy}”</div>
+          <div class="vis">${c.visual}</div>
+          <div class="hook">🎯 ${c.hook}</div>
+          <div class="tags">
+            <span class="tag" style="color:${MEDIA_COLOR[c.media]}">${MEDIA_LABEL[c.media]||c.media}</span>
+            <span class="tag">${FMT_LABEL[c.format]||c.format}</span>
+          </div>
+          <div class="foot">
+            <a href="${c.source_url}" target="_blank" rel="noopener">출처 ↗</a>
+            <span class="conf ${c.conf}">●${c.conf}</span>
+          </div>
+        </div>
+      </div>`;
+    }).join("") || `<div class="muted">조건에 맞는 크리에이티브가 없습니다.</div>`;
+  }
+  [fWork,fMedia,fFormat,fSort].forEach(el=>el.addEventListener("change",render));
+  fSearch.addEventListener("input",render);
+  render();
+})();
+
+// ── 5. 타임라인 ──
+(function(){
+  const items = D.timeline.slice().sort((a,b)=>a.date.localeCompare(b.date));
+  document.getElementById("timeline").innerHTML = items.map(t=>{
+    const w = WMAP[t.work];
+    return `<div class="tl-item">
+      <div class="tl-dot" style="background:${w.color};box-shadow:0 0 8px ${w.color}"></div>
+      <div class="tl-c"><div class="tl-date">${t.date}</div><div class="tl-label" style="color:${w.key===OWNER?'var(--accent)':'var(--txt)'}">${t.label}</div></div>
+    </div>`;
+  }).join("");
+})();
+
+// ── footer ──
+document.getElementById("footer").innerHTML =
+  `데이터 정확도: 카피·키비주얼·메타데이터 <b>정확</b>(공식 출처) · 화제성 일부 수치·해외 매출 <b>추정</b> · 박스오피스/기사 <b>수동 보강</b>.<br>
+   © 2026 Creative Search Dashboard · 스릴러·공포 카테고리 벤치마크 · 비영리 내부 마케팅 분석용`;
+
+// ── reveal on scroll ──
+const io = new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.08});
+document.querySelectorAll(".panel").forEach(p=>io.observe(p));
+</script>
+</body>
+</html>
