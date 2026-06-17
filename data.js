@@ -318,6 +318,37 @@ window.DATA = {
     ]
   },
 
+  // ── 크리에이티브별 반응/위닝 신호 (성과 프록시) ──
+  // 원칙: 크리에이티브 단위 지표(예고편 조회수 등)가 있을 때만 winning. 작품 단위 지표(박스오피스·순위)는 작품 헤더로 분리.
+  // 모든 위닝 판정은 [추정]. proxy 수치 자체는 출처 있으면 [정확], 해석/환산은 [추정].
+  signals: {
+    // 44교시 (자사 · 외부 유료광고 미집행)
+    "c_surv44_1":{winning:false, note:"자사 · 외부 유료광고 미집행 (집행 데이터 없음)", tag:"자사 키비주얼"},
+    "c_surv44_2":{winning:false, note:"언론 에디토리얼 노출", tag:"언론"},
+    // 괴담 (작품 단위 성과 폭발 · 개별 소재 성과는 분리 불가)
+    "c_goedam_1":{winning:false, note:"작품 성과 우수 (당일 650만뷰) · 개별 소재 성과 아님", tag:"런칭 소재"},
+    "c_goedam_2":{winning:false, note:"작품 성과 우수 · 개별 소재 성과 아님", tag:"런칭 소재"},
+    "c_goedam_3":{winning:false, note:"작품 성과 우수 · 개별 소재 성과 아님", tag:"런칭 소재"},
+    "c_goedam_4":{winning:false, note:"캐릭터 순차 티저 · 작품 성과 우수", tag:"런칭 소재"},
+    // 백룸 (크리에이티브 단위 고조회 → 위닝)
+    "c_backrooms_1":{winning:false, note:"Meta 유료 집행 확인 · 노출일수 미실측", tag:"Meta 집행"},
+    "c_backrooms_2":{winning:true, winType:"performance", winLabel:"원작 IP 초고조회", proxy:"원작 유튜브 누적 1.9억 뷰", proxyConf:"추정", tag:"원작 IP 파워"},
+    "c_backrooms_3":{winning:false, note:"미니멀 티저 포스터 (브랜딩)", tag:"브랜딩"},
+    "c_backrooms_4":{winning:true, winType:"performance", winLabel:"예고편 고조회", proxy:"예고편 공개 1주 1,200만 뷰·43만 좋아요", proxyConf:"추정", tag:"예고편 고조회"},
+    // 군체 (작품 흥행은 작품 단위 → 개별 위닝 단정 X)
+    "c_colony_1":{winning:false, note:"작품 성과 우수 (347만) · 개별 소재 성과 아님", tag:"예고편"},
+    "c_colony_2":{winning:false, note:"작품 성과 우수 · 개별 소재 성과 아님", tag:"스타 키비주얼"},
+    "c_colony_3":{winning:false, note:"작품 성과 우수 · 개별 소재 성과 아님", tag:"글로벌 티저"},
+    // 데블스플랜 (메인 예고편 상시 운영 → 장기운영 위닝)
+    "c_devilsplan_1":{winning:true, winType:"longevity", winLabel:"메인 예고편 상시 운영", proxy:null, tag:"예고편 상시 운영"},
+    "c_devilsplan_2":{winning:false, note:"시즌2 티저", tag:"티저"},
+    "c_devilsplan_3":{winning:false, note:"메인 예고편 변형 (Meta 집행)", tag:"Meta 집행"},
+    // 지금 우리 학교는 (예고편 상시 운영 + 흥행 후 재활용 → 장기운영 위닝)
+    "c_aoud_1":{winning:true, winType:"longevity", winLabel:"공식 예고편 상시 운영", proxy:null, tag:"예고편 상시 운영"},
+    "c_aoud_2":{winning:false, note:"런칭 메인 포스터", tag:"런칭 소재"},
+    "c_aoud_3":{winning:true, winType:"longevity", winLabel:"흥행 후 재활용 장기", proxy:null, tag:"흥행 후 재활용"}
+  },
+
   // 캠페인/공개 타임라인
   timeline: [
     {work:"surv44", label:"44교시 생존수업 연재", date:"2025-02-24"},

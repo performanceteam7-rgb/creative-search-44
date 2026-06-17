@@ -13,7 +13,7 @@
     --line:rgba(255,255,255,.085); --line2:rgba(255,255,255,.05);
     --txt:#f0eef2; --muted:#9b94a3; --dim:#6a6472;
     --accent:#ff2e4d; --accent2:#ff6a3d;
-    --ok:#34d39a; --warn:#f5b53f; --crit:#ff4d62; --info:#7aa2ff;
+    --ok:#34d39a; --warn:#f5b53f; --crit:#ff4d62; --info:#7aa2ff; --win:#1f8fff;
     --num:'Plus Jakarta Sans','Pretendard',sans-serif;
     --soft:0 1px 2px rgba(0,0,0,.5),0 16px 40px -16px rgba(0,0,0,.7);
     --ease:cubic-bezier(.32,.72,0,1);
@@ -139,6 +139,71 @@
   .pblock li .lh{flex:none;min-width:52px;font-size:10px;font-weight:800;color:var(--accent);padding-top:1px}
   .pblock li .ld{color:#d2cdd8}
 
+  /* 마스터-디테일 (작품별 크리에이티브) */
+  .md-note{font-size:11.5px;color:var(--muted);background:rgba(31,143,255,.06);border:1px solid rgba(31,143,255,.18);
+    border-radius:10px;padding:9px 12px;margin-bottom:14px;line-height:1.55;word-break:keep-all}
+  .md-note b{color:#bcd6ff}
+  .md-filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+  .toggle-btn{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--line);border-radius:10px;
+    padding:9px 13px;font-size:13px;font-family:inherit;font-weight:700;cursor:pointer;transition:all .3s var(--ease)}
+  .toggle-btn[data-on="1"]{background:rgba(31,143,255,.16);color:#7ab8ff;border-color:rgba(31,143,255,.5)}
+  .md{display:grid;grid-template-columns:266px 1fr;gap:18px;align-items:start}
+  @media(max-width:820px){.md{grid-template-columns:1fr}}
+  .md-master{display:flex;flex-direction:column;gap:9px;position:sticky;top:14px}
+  @media(max-width:820px){.md-master{position:static;flex-direction:row;overflow-x:auto;padding-bottom:8px}.mrow{min-width:188px;flex:none}}
+  .mrow{background:var(--cardbg);border:1px solid var(--line);border-radius:14px;padding:12px 13px;cursor:pointer;
+    transition:border-color .3s var(--ease),transform .3s var(--ease)}
+  .mrow:hover{border-color:rgba(255,255,255,.22);transform:translateX(2px)}
+  .mrow.active{border-color:var(--win);box-shadow:0 0 0 1px var(--win),0 10px 28px -14px rgba(31,143,255,.5);
+    background:linear-gradient(180deg,rgba(31,143,255,.1),rgba(255,255,255,.015))}
+  .mrow.owner.active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 10px 28px -14px rgba(255,46,77,.5);
+    background:linear-gradient(180deg,rgba(255,46,77,.1),rgba(255,255,255,.015))}
+  .mrow-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .mrow-name{font-size:13.5px;font-weight:800;letter-spacing:-.02em;line-height:1.2;word-break:keep-all}
+  .mrow-own{font-size:8.5px;font-weight:800;padding:2px 6px;border-radius:999px;background:var(--accent);color:#fff;vertical-align:middle}
+  .mrow-sub{font-size:11px;color:var(--dim);margin-top:4px}
+  .mrow-sub .win-c{color:var(--win);font-weight:800}
+  .mrow-gen{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}
+  .mrow-gen .gtag{font-size:9px;padding:2px 6px}
+  .mrow-prev{display:flex;gap:8px;align-items:center;margin-top:9px;padding-top:9px;border-top:1px solid var(--line2)}
+  .mrow-prev .pth{width:30px;height:40px;border-radius:5px;object-fit:cover;flex:none}
+  .mrow-prev .ptx{font-size:10px;color:var(--muted);line-height:1.35;word-break:keep-all;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+  .md-detail{min-width:0}
+  .md-dh{margin-bottom:14px;padding-bottom:13px;border-bottom:1px solid var(--line)}
+  .md-dh h2{font-size:19px;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .md-dh .dh-sub{font-size:12px;color:var(--muted);margin-top:6px;word-break:keep-all}
+  .md-dh-lab{font-size:9.5px;font-weight:800;letter-spacing:.06em;color:var(--dim);text-transform:uppercase;margin:11px 0 5px}
+  .md-dh-buzz{display:flex;gap:7px;flex-wrap:wrap}
+  .md-dh-buzz .bchip{font-size:11px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:8px;padding:5px 9px}
+  .md-dh-buzz .bchip span.k{color:var(--dim)} .md-dh-buzz .bchip b{color:#fff;font-family:var(--num)}
+
+  .md-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:16px}
+  .ccard{position:relative;background:var(--cardbg);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+    display:flex;flex-direction:column;box-shadow:var(--soft);transition:transform .4s var(--ease)}
+  .ccard:hover{transform:translateY(-4px)}
+  .ccard.win{border-color:var(--win);box-shadow:0 0 0 1px rgba(31,143,255,.45),0 16px 38px -18px rgba(31,143,255,.45)}
+  .cc-thumb{height:150px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#0c0a0f}
+  .cc-thumb img{width:100%;height:100%;object-fit:cover}
+  .cc-thumb .ph{font-size:30px;opacity:.35}
+  .cc-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5),transparent 55%);pointer-events:none}
+  .cc-win{position:absolute;top:8px;left:8px;z-index:2;font-size:9.5px;font-weight:800;padding:3px 9px;border-radius:999px;
+    background:var(--win);color:#fff;box-shadow:0 2px 10px rgba(31,143,255,.55)}
+  .cc-play{position:absolute;top:8px;right:8px;z-index:2;background:rgba(0,0,0,.6);border-radius:7px;font-size:10px;padding:3px 7px;font-weight:700}
+  .cc-body{padding:12px 13px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .cc-copy{font-size:12.5px;font-weight:700;color:#e2dee6;line-height:1.45;word-break:keep-all;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .cc-hook{font-size:10.5px;color:#ffc9d1;background:rgba(255,46,77,.08);border:1px solid rgba(255,46,77,.16);border-radius:8px;padding:5px 8px;line-height:1.4;word-break:keep-all}
+  .cc-proxy{font-size:11px;font-weight:700;color:#bcd6ff;background:rgba(31,143,255,.1);border:1px solid rgba(31,143,255,.22);
+    border-radius:8px;padding:6px 8px;line-height:1.4;word-break:keep-all}
+  .cc-note{font-size:10.5px;color:var(--dim);line-height:1.4;word-break:keep-all}
+  .cc-tags{display:flex;gap:5px;flex-wrap:wrap}
+  .cc-tags .tag{font-size:9.5px;padding:2px 7px}
+  .cc-tags .tag.win-tag{color:#7ab8ff;border-color:rgba(31,143,255,.35);background:rgba(31,143,255,.08)}
+  .cc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;font-size:10.5px;color:var(--dim);border-top:1px solid var(--line2);padding-top:8px}
+  .cc-foot a{color:var(--accent);font-weight:700}
+
   /* bars */
   .bar-row{display:flex;align-items:center;gap:12px;margin:8px 0}
   .bar-row .name{width:140px;font-size:12px;color:#d2cdd8;flex:none;font-weight:600;word-break:keep-all}
@@ -230,12 +295,6 @@
     <div class="dim" id="srcNote" style="margin-top:9px"></div>
   </div>
 
-  <!-- 0. 작품 개요 밴드 -->
-  <div class="panel">
-    <div class="sec-title">🎬 벤치마크 작품 개요 <span class="tail">— 자사 1 + 스릴러·공포 화제작 5</span></div>
-    <div class="works" id="works"></div>
-  </div>
-
   <!-- 1. 재광고 적용 인사이트 -->
   <div class="panel">
     <div class="sec-title"><span class="num">1</span> 재광고 적용 인사이트 <span class="tail">— 44교시 재집행 시 반영할 위닝 전략</span></div>
@@ -250,9 +309,26 @@
     <div class="planblocks" id="planBlocks"></div>
   </div>
 
-  <!-- 3. 비교 분석 -->
+  <!-- 3. 작품별 크리에이티브 (마스터-디테일) -->
   <div class="panel">
-    <div class="sec-title"><span class="num">3</span> 비교 분석 <span class="tail">— &lt;44교시 생존수업&gt; vs 요청 작품</span></div>
+    <div class="sec-title"><span class="num">3</span> 작품별 크리에이티브 <span class="tail">— 작품 클릭 → 해당 소재 펼침 · 파란 테두리 = 위닝(반응 좋음)</span></div>
+    <div class="md-note">ℹ 벤치마크 소재의 "위닝(장기 운영·반응 좋음)"은 광고 노출일수 실측이 아니라 <b>공개 성과 프록시</b>(예고편 조회수·흥행 후 재활용 등) 기반 <b>추정</b>입니다. 박스오피스·순위 등 <b>작품 단위 지표</b>는 작품 헤더에 표시되며 개별 소재 성과가 아닙니다. 자사 44교시는 외부 유료광고 미집행이라 집행 데이터가 없습니다.</div>
+    <div class="md-filters">
+      <select id="fHook"></select>
+      <select id="fFormat"></select>
+      <button id="fWinOnly" class="toggle-btn" data-on="0">🔥 위닝만 보기</button>
+      <input type="search" id="fSearch" placeholder="카피·후킹 검색…" />
+      <span class="count-pill" id="mdCount"></span>
+    </div>
+    <div class="md">
+      <div class="md-master" id="mdMaster"></div>
+      <div class="md-detail" id="mdDetail"></div>
+    </div>
+  </div>
+
+  <!-- 4. 비교 분석 -->
+  <div class="panel">
+    <div class="sec-title"><span class="num">4</span> 비교 분석 <span class="tail">— &lt;44교시 생존수업&gt; vs 요청 작품</span></div>
     <div class="cmp-head"><div>비교 축</div><div>44교시 생존수업 (자사)</div><div>벤치마크 화제작</div></div>
     <div class="cmp" id="cmp"></div>
     <div class="dim" style="margin-top:12px;display:flex;gap:14px;flex-wrap:wrap">
@@ -263,35 +339,21 @@
     </div>
   </div>
 
-  <!-- 3. 후킹 패턴 -->
+  <!-- 5. 후킹 패턴 -->
   <div class="row2">
     <div class="panel">
-      <div class="sec-title"><span class="num">4</span> 후킹 패턴 분석 <span class="tail">— 벤치마크 크리에이티브 카피·연출</span></div>
+      <div class="sec-title"><span class="num">5</span> 후킹 패턴 분석 <span class="tail">— 벤치마크 크리에이티브 카피·연출</span></div>
       <div id="hookBars"></div>
       <div class="dim" style="margin-top:10px">막대 = 해당 후킹을 쓴 크리에이티브 수 (자사 제외 벤치마크 기준).</div>
     </div>
     <div class="panel">
-      <div class="sec-title"><span class="num">4</span> 포맷 · 매체 분포</div>
+      <div class="sec-title"><span class="num">5</span> 포맷 · 매체 분포</div>
       <div id="fmtBars" style="margin-bottom:18px"></div>
       <div id="mediaBars"></div>
     </div>
   </div>
 
-  <!-- 4. 크리에이티브 갤러리 -->
-  <div class="panel">
-    <div class="sec-title"><span class="num">5</span> 크리에이티브 갤러리 <span class="tail">— 실제 카피·키비주얼·후킹 (출처 링크)</span></div>
-    <div class="filters" id="filters">
-      <select id="fWork"></select>
-      <select id="fMedia"></select>
-      <select id="fFormat"></select>
-      <select id="fSort"></select>
-      <input type="search" id="fSearch" placeholder="카피·후킹 검색…" />
-      <span class="count-pill" id="galleryCount"></span>
-    </div>
-    <div class="gallery" id="gallery"></div>
-  </div>
-
-  <!-- 5. 타임라인 -->
+  <!-- 6. 타임라인 -->
   <div class="panel">
     <div class="sec-title"><span class="num">6</span> 공개·캠페인 타임라인</div>
     <div class="tl" id="timeline"></div>
@@ -322,34 +384,120 @@ document.getElementById("legend").innerHTML = Object.entries(D.meta.sources).map
 }).join("");
 document.getElementById("srcNote").textContent = "ℹ " + D.meta.note;
 
-// ── 0. 작품 개요 ──
+// ── 3. 작품별 크리에이티브 (마스터-디테일) ──
 (function(){
-  const order = [OWNER, ...WORKS.filter(w=>w.key!==OWNER).map(w=>w.key)];
-  document.getElementById("works").innerHTML = order.map(k=>{
-    const w = WMAP[k];
-    const thumb = w.image
-      ? `<img src="${w.image}" loading="lazy" alt="${w.name}" onerror="this.parentElement.innerHTML='<div class=\\'noimg\\' style=\\'background:linear-gradient(135deg,${w.color},#100d14)\\'>${w.name}</div>'"/>`
-      : `<div class="noimg" style="background:linear-gradient(135deg,${w.color},#100d14)">${w.name}</div>`;
-    const adClass = w.meta_ad_status==="none"?"none":w.meta_ad_status==="yes"?"yes":"unknown";
-    const adIcon = w.meta_ad_status==="none"?"⚠":w.meta_ad_status==="yes"?"✓":"?";
-    const buzz = w.buzz.slice(0,3).map(b=>`<div class="bz"><span>${b.metric}</span><b>${b.value}</b></div>`).join("");
-    return `<div class="wcard ${w.key===OWNER?'owner':''}">
-      <div class="wthumb">${thumb}
-        <span class="wtag" style="background:${w.color}cc">${w.type}</span>
-        ${w.key===OWNER?`<span class="wown">우리 작품</span>`:''}
-      </div>
-      <div class="wbody">
-        <div class="wname">${w.name}</div>
-        <div class="wmeta">${w.platform} · ${w.release}</div>
-        <div class="wgen">${w.genre.map(g=>`<span class="gtag">${g}</span>`).join("")}</div>
-        <div class="wbuzz">${buzz}</div>
-        <div class="wad ${adClass}">${adIcon} ${w.meta_ad_note}</div>
-      </div>
-    </div>`;
-  }).join("");
+  const SIG = D.signals || {};
+  const HOOK_KEYS = Object.entries(D.hookDict);
+  const hookOf = c => { const t=(c.copy||"")+" "+(c.visual||"")+" "+(c.hook||"");
+    for(const [h,kws] of HOOK_KEYS){ if(kws.some(w=>t.includes(w))) return h; } return "기타"; };
+  const CRE = D.creatives.map(c=>({...c, ...(SIG[c.id]||{}), hookType:hookOf(c)}));
+  const byWork = k => CRE.filter(c=>c.work===k);
+  const winOf  = k => byWork(k).filter(c=>c.winning).length;
+
+  const benchKeys = WORKS.filter(w=>w.key!==OWNER).map(w=>w.key)
+    .sort((a,b)=> winOf(b)-winOf(a) || byWork(b).length-byWork(a).length);
+  const masterOrder = ["__all__", ...benchKeys, OWNER];
+  let selected = benchKeys[0];
+
+  const fHook=document.getElementById("fHook"), fFormat=document.getElementById("fFormat"),
+        fWinOnly=document.getElementById("fWinOnly"), fSearch=document.getElementById("fSearch"),
+        mdMaster=document.getElementById("mdMaster"), mdDetail=document.getElementById("mdDetail"),
+        mdCount=document.getElementById("mdCount");
+
+  fHook.innerHTML = `<option value="">전체 후킹유형</option>`+[...new Set(CRE.map(c=>c.hookType))].map(h=>`<option value="${h}">${h}</option>`).join("");
+  fFormat.innerHTML = `<option value="">전체 포맷</option>`+[...new Set(CRE.map(c=>c.format))].map(f=>`<option value="${f}">${FMT_LABEL[f]||f}</option>`).join("");
+
+  function renderMaster(){
+    mdMaster.innerHTML = masterOrder.map(k=>{
+      if(k==="__all__"){
+        const wc = CRE.filter(c=>c.winning).length;
+        return `<div class="mrow ${selected==='__all__'?'active':''}" data-k="__all__">
+          <div class="mrow-top"><span class="mrow-name">🔍 전체 크리에이티브</span></div>
+          <div class="mrow-sub">${CRE.length}개 소재 · 🔥<span class="win-c">위닝 ${wc}</span></div>
+        </div>`;
+      }
+      const w=WMAP[k], cs=byWork(k), wc=winOf(k);
+      const rep = cs.find(c=>c.winning && c.image) || cs.find(c=>c.winning) || cs.find(c=>c.image) || cs[0];
+      const prev = rep ? `<div class="mrow-prev">
+          ${rep.image?`<img class="pth" src="${rep.image}" loading="lazy" onerror="this.style.visibility='hidden'"/>`:`<div class="pth" style="background:linear-gradient(135deg,${w.color},#100d14)"></div>`}
+          <div class="ptx">${rep.winning?'🔥 ':''}“${(rep.copy||'').slice(0,34)}”</div></div>` : '';
+      return `<div class="mrow ${w.key===OWNER?'owner':''} ${selected===k?'active':''}" data-k="${k}">
+        <div class="mrow-top"><span class="mrow-name">${w.name}</span>${w.key===OWNER?`<span class="mrow-own">자사</span>`:''}</div>
+        <div class="mrow-sub">${w.platform.split(' ')[0]} · 크리 ${cs.length}${wc?` · 🔥<span class="win-c">위닝 ${wc}</span>`:''}</div>
+        <div class="mrow-gen">${w.genre.map(g=>`<span class="gtag">${g}</span>`).join("")}</div>
+        ${prev}
+      </div>`;
+    }).join("");
+    [...mdMaster.querySelectorAll(".mrow")].forEach(el=>el.addEventListener("click",()=>{selected=el.dataset.k; renderMaster(); renderDetail();}));
+  }
+
+  function passF(c){
+    const h=fHook.value, f=fFormat.value, won=fWinOnly.dataset.on==="1", q=fSearch.value.trim();
+    return (!h||c.hookType===h)&&(!f||c.format===f)&&(!won||c.winning)&&
+      (!q||(c.copy||"").includes(q)||(c.hook||"").includes(q)||(c.visual||"").includes(q));
+  }
+
+  function renderDetail(){
+    let list = (selected==="__all__" ? CRE : byWork(selected)).filter(passF);
+    list.sort((a,b)=> (b.winning?1:0)-(a.winning?1:0) || a.hookType.localeCompare(b.hookType));
+    mdCount.textContent = `${list.length}개 표시`;
+
+    let header = "";
+    if(selected==="__all__"){
+      header = `<div class="md-dh"><h2>🔍 전체 크리에이티브</h2><div class="dh-sub">모든 작품의 소재 통합 보기 · 후킹·포맷·위닝 필터와 검색 적용</div></div>`;
+    } else {
+      const w=WMAP[selected];
+      const adClass = w.meta_ad_status==="none"?"none":w.meta_ad_status==="yes"?"yes":"unknown";
+      const adIcon = w.meta_ad_status==="none"?"⚠":w.meta_ad_status==="yes"?"✓":"?";
+      header = `<div class="md-dh">
+        <h2>${w.name}${w.key===OWNER?`<span class="mrow-own">자사</span>`:''}</h2>
+        <div class="dh-sub">${w.platform} · ${w.type} · ${w.release} · ${w.author}</div>
+        <div class="md-dh-lab">작품 단위 지표 — 개별 소재 성과 아님</div>
+        <div class="md-dh-buzz">${w.buzz.map(b=>`<span class="bchip"><span class="k">${b.metric}</span> <b>${b.value}</b> <span class="conf ${b.conf}">●${b.conf}</span></span>`).join("")}</div>
+        <div class="wad ${adClass}" style="margin-top:11px;display:inline-flex;align-items:center;gap:6px">${adIcon} ${w.meta_ad_note}</div>
+      </div>`;
+    }
+
+    const cards = list.map(c=>{
+      const w=WMAP[c.work];
+      const thumb = c.image
+        ? `<img src="${c.image}" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.ph').style.display='block'"/><span class="ph" style="display:none">${c.format==='video'?'🎬':'🖼️'}</span>`
+        : `<span class="ph">${c.format==='video'?'🎬':'🖼️'}</span>`;
+      const proxyNote = c.winning
+        ? (c.proxy
+            ? `<div class="cc-proxy">▶ ${c.proxy} <span class="conf 추정">[추정]</span></div>`
+            : `<div class="cc-proxy">🔥 ${c.winLabel||'장기 운영'} <span class="conf 추정">[추정]</span></div>`)
+        : (c.note ? `<div class="cc-note">· ${c.note}</div>` : '');
+      return `<div class="ccard ${c.winning?'win':''}">
+        <div class="cc-thumb">${thumb}
+          ${c.winning?`<span class="cc-win">🔥 장기 운영·반응 좋음</span>`:''}
+          ${c.format==='video'?`<span class="cc-play">▶ 영상</span>`:''}
+        </div>
+        <div class="cc-body">
+          <div class="cc-copy">“${c.copy}”</div>
+          <div class="cc-hook">🎯 ${c.hookType}</div>
+          ${proxyNote}
+          <div class="cc-tags">
+            ${selected==='__all__'?`<span class="tag" style="color:${w.color}">${w.name.length>9?w.name.slice(0,8)+'…':w.name}</span>`:''}
+            <span class="tag" style="color:${MEDIA_COLOR[c.media]}">${MEDIA_LABEL[c.media]||c.media}</span>
+            <span class="tag">${FMT_LABEL[c.format]||c.format}</span>
+            ${c.tag?`<span class="tag ${c.winning?'win-tag':''}">${c.tag}</span>`:''}
+          </div>
+          <div class="cc-foot"><a href="${c.source_url}" target="_blank" rel="noopener">출처 ↗</a><span class="conf ${c.conf}">●${c.conf}</span></div>
+        </div>
+      </div>`;
+    }).join("") || `<div class="muted">조건에 맞는 소재가 없습니다.</div>`;
+
+    mdDetail.innerHTML = header + `<div class="md-cards">${cards}</div>`;
+  }
+
+  fWinOnly.addEventListener("click",()=>{fWinOnly.dataset.on = fWinOnly.dataset.on==="1"?"0":"1"; renderDetail();});
+  [fHook,fFormat].forEach(el=>el.addEventListener("change",renderDetail));
+  fSearch.addEventListener("input",renderDetail);
+  renderMaster(); renderDetail();
 })();
 
-// ── 1. 비교 분석 ──
+// ── 4. 비교 분석 ──
 document.getElementById("cmp").innerHTML = D.comparison.map(c=>`
   <div class="cmp-row">
     <div class="cmp-axis"><span class="cmp-gap gap-${c.gap}"></span>${c.axis}</div>
@@ -414,57 +562,7 @@ document.getElementById("applies").innerHTML = D.applyInsights.map((a,i)=>`
     `<div class="dim" style="font-weight:700;color:#cdd2dd;margin-bottom:6px">매체</div>`+distro("media", MEDIA_LABEL, MEDIA_COLOR);
 })();
 
-// ── 4. 갤러리 ──
-(function(){
-  const fWork=document.getElementById("fWork"), fMedia=document.getElementById("fMedia"),
-        fFormat=document.getElementById("fFormat"), fSort=document.getElementById("fSort"), fSearch=document.getElementById("fSearch");
-  fWork.innerHTML = `<option value="">전체 작품</option>`+WORKS.map(w=>`<option value="${w.key}">${w.name}${w.key===OWNER?' (우리)':''}</option>`).join("");
-  fMedia.innerHTML = `<option value="">전체 매체</option>`+[...new Set(D.creatives.map(c=>c.media))].map(m=>`<option value="${m}">${MEDIA_LABEL[m]||m}</option>`).join("");
-  fFormat.innerHTML = `<option value="">전체 포맷</option>`+[...new Set(D.creatives.map(c=>c.format))].map(f=>`<option value="${f}">${FMT_LABEL[f]||f}</option>`).join("");
-  fSort.innerHTML = `<option value="own">자사 먼저</option><option value="work">작품순</option><option value="media">매체순</option>`;
-
-  function render(){
-    const w=fWork.value, m=fMedia.value, f=fFormat.value, q=fSearch.value.trim();
-    let list = D.creatives.filter(c=>(!w||c.work===w)&&(!m||c.media===m)&&(!f||c.format===f)&&
-      (!q||(c.copy||"").includes(q)||(c.hook||"").includes(q)||(c.visual||"").includes(q)));
-    const s=fSort.value;
-    list.sort((a,b)=> s==="media"? a.media.localeCompare(b.media)
-      : s==="work"? a.work.localeCompare(b.work)
-      : (a.work===OWNER?-1:0)-(b.work===OWNER?-1:0) || a.work.localeCompare(b.work));
-    document.getElementById("galleryCount").textContent = `${list.length}건 / 전체 ${D.creatives.length}건`;
-    document.getElementById("gallery").innerHTML = list.map(c=>{
-      const w = WMAP[c.work];
-      const head = c.image
-        ? `<img src="${c.image}" loading="lazy" alt="" onerror="this.parentElement.classList.add('noimgbg');this.outerHTML='<div class=\\'copybig\\'>${(c.copy||'').replace(/'/g,'’').slice(0,46)}</div>'"/>`
-        : `<div class="copybig">${(c.copy||'').slice(0,52)}</div>`;
-      return `<div class="card">
-        <div class="thumb" style="${c.image?'':`background:linear-gradient(150deg,${w.color}40,#0c0a0f)`}">
-          ${head}
-          <span class="wtag" style="background:${w.color}cc">${w.name.length>10?w.name.slice(0,9)+'…':w.name}</span>
-          ${c.format==="video"?`<span class="play">▶ 영상</span>`:''}
-        </div>
-        <div class="body">
-          <div class="copy">“${c.copy}”</div>
-          <div class="vis">${c.visual}</div>
-          <div class="hook">🎯 ${c.hook}</div>
-          <div class="tags">
-            <span class="tag" style="color:${MEDIA_COLOR[c.media]}">${MEDIA_LABEL[c.media]||c.media}</span>
-            <span class="tag">${FMT_LABEL[c.format]||c.format}</span>
-          </div>
-          <div class="foot">
-            <a href="${c.source_url}" target="_blank" rel="noopener">출처 ↗</a>
-            <span class="conf ${c.conf}">●${c.conf}</span>
-          </div>
-        </div>
-      </div>`;
-    }).join("") || `<div class="muted">조건에 맞는 크리에이티브가 없습니다.</div>`;
-  }
-  [fWork,fMedia,fFormat,fSort].forEach(el=>el.addEventListener("change",render));
-  fSearch.addEventListener("input",render);
-  render();
-})();
-
-// ── 5. 타임라인 ──
+// ── 6. 타임라인 ──
 (function(){
   const items = D.timeline.slice().sort((a,b)=>a.date.localeCompare(b.date));
   document.getElementById("timeline").innerHTML = items.map(t=>{
@@ -479,6 +577,7 @@ document.getElementById("applies").innerHTML = D.applyInsights.map((a,i)=>`
 // ── footer ──
 document.getElementById("footer").innerHTML =
   `데이터 정확도: 카피·키비주얼·메타데이터 <b>정확</b>(공식 출처) · 화제성 일부 수치·해외 매출 <b>추정</b> · 박스오피스/기사 <b>수동 보강</b>.<br>
+   소재 "위닝(반응 좋음)"은 광고 노출일수 실측이 아닌 <b>공개 성과 프록시</b>(예고편 조회수·흥행 후 재활용 등) 기반 <b>추정</b>이며, 작품 단위 지표는 개별 소재 성과와 구분합니다.<br>
    © 2026 Creative Search Dashboard · 스릴러·공포 카테고리 벤치마크 · 비영리 내부 마케팅 분석용`;
 
 // ── reveal on scroll ──
